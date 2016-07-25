@@ -1,10 +1,36 @@
-var socket = io();
-var messagesNode = $('.messages');
-var onlineUsersNumber = $('.online-users-number');
-var messages = [];
+const socket = io();
+const messagesNode = $('.messages');
+const onlineUsersNumber = $('.online-users-number');
+const welcomeMessage = $('.welcome-message');
+const resetUsernameEl = $('.reset-username');
+const messages = [];
+let username;
+
+const resetUsername = () => updateUserNameInDom(askAndSetUsername());
+
+const updateUserNameInDom = username => {
+  welcomeMessage.text('Welcome ' + username + '!');
+}
+
+const askAndSetUsername = () => {
+  username = prompt("Please enter your name", "");
+  localStorage.setItem('username', username);
+  return username;
+}
 
 $(() => {
-  var person = prompt("Please enter your name", "");
+  if('localStorage' in window) {
+    const {localStorage} = window;
+    username = localStorage.getItem('username');
+    if(!username) {
+      username = askAndSetUsername();
+    }
+  }
+  else {
+    username = prompt("Please enter your name", "");
+  }
+  updateUserNameInDom(username);
+
   var sendButton = $('.send-button');
   var inputField = $('#messageField');
   sendButton.click(() => {
@@ -18,7 +44,8 @@ $(() => {
     if(event.keyCode == 13) {
       sendButton.click();
     }
-  })
+  });
+  resetUsernameEl.click(resetUsername);
 });
 
 

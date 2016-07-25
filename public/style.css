@@ -21,7 +21,7 @@ footer {
 }
 .users {
 position: absolute;
-top: 0;
+top: 20px;
 right: 25px;
 font-size: 20px;
 text-align: center;

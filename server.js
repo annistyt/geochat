@@ -17,7 +17,6 @@ io.on('connection', socket => {
   io.emit("numberofusers", numberofusers);
 
   socket.on('send message', data => {
-     console.log(data);
     io.emit('message', data);
   });
 
