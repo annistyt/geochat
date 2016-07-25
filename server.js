@@ -10,19 +10,28 @@ app.use(express.static('public', {maxAge: 0}));
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-var numberofusers = 0;
+const users = new Map();
 
 io.on('connection', socket => {
-  numberofusers = numberofusers + 1;
-  io.emit("numberofusers", numberofusers);
+
+  const emitUsers = () => {
+    const userArray = [];
+    users.forEach(({username}) => userArray.push(username));
+    socket.emit('users', userArray);
+  }
 
   socket.on('send message', data => {
     io.emit('message', data);
   });
 
   socket.on('disconnect', () => {
-    numberofusers = numberofusers - 1;
-    io.emit("numberofusers", numberofusers);
+    users.delete(socket.id);
+    emitUsers();
+  });
+
+  socket.on('username', username => {
+    users.set(socket.id, {username});
+    emitUsers();
   });
 
 });

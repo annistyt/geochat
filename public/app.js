@@ -3,10 +3,15 @@ var messagesNode = $('.messages');
 var onlineUsersNumber = $('.online-users-number');
 var welcomeMessage = $('.welcome-message');
 var resetUsernameEl = $('.reset-username');
+var onlineUsersList = $('.online-users');
 var messages = [];
 var username;
 
-var resetUsername = function() { updateUserNameInDom(askAndSetUsername()) };
+var resetUsername = function() { 
+  username = askAndSetUsername();
+  updateUserNameInDom(username)
+  socket.emit('username', username);
+};
 
 var updateUserNameInDom = function(username) {
   welcomeMessage.text('Welcome ' + username + '!');
@@ -29,6 +34,7 @@ $(function() {
   else {
     username = prompt("Please enter your name", "");
   }
+  socket.emit('username', username);
   updateUserNameInDom(username);
 
   var sendButton = $('.send-button');
@@ -61,11 +67,15 @@ socket.on('message', function(data) {
   messages.push(data);
   updateMessageList();
   // alert(`fikk melding fra bruker: ${data.text}`);
-
 });
 
-socket.on('numberofusers', function(numberofusers) {
-  onlineUsersNumber.text(numberofusers);
+socket.on('users', function(users) {
+  onlineUsersNumber.text(users.length);
+  onlineUsersList.html('');
+  users.forEach(function(_username) {
+    const user = _username == username ? 'Myself' : _username;
+    $('<li>').text(user).appendTo(onlineUsersList);
+  });
 });
 
 
