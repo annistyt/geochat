@@ -11,15 +11,26 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const users = new Map();
-const emitUsers = () => {
-  const userArray = [];
-  users.forEach(user => userArray.push(user));
-  io.emit('users', userArray);
-}
+
 
 io.on('connection', socket => {
 
+  const emitUsers = () => {
+    const userArray = [];
+    users.forEach(user => {
+      const {typing, username, id} = user;
+      userArray.push({
+        mine: socket.id === id,
+        typing,
+        username
+      });
+    });
+    io.emit('users', userArray);
+  }
+
   socket.on('send message', data => {
+    data.timestamp = new Date().toJSON();
+    data.sender = socket.id;
     io.emit('message', data);
   });
 
@@ -29,7 +40,7 @@ io.on('connection', socket => {
   });
 
   socket.on('username', username => {
-    users.set(socket.id, {username});
+    users.set(socket.id, {username, id: socket.id});
     emitUsers();
   });
 

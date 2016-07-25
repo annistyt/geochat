@@ -22,6 +22,19 @@ footer {
   overflow-y: scroll;
   max-height: calc(100vh - 184px);
 }
+.messages .mine {
+  float:right;
+  background-color: #0084ff;
+  color:#ffffff;
+}
+.messages li {
+  float:left;
+  display: inline-block;
+  padding:5px 10px;
+  background-color: #efefef;
+  border-radius: 6px;
+  clear:both;
+}
 .online-users {
   list-style: none;
 }

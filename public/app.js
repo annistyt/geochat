@@ -89,11 +89,13 @@ var updateMessageList = function() {
   messagesNode.html('');
   messages.forEach(function(message) {
     var value = message.username + ': ' + message.text;
-    $('<li>').text(value).appendTo(messagesNode);
+    $('<li>').addClass(message.mine ? 'mine' : '').html(value).appendTo(messagesNode);
   });
 };
 
 socket.on('message', function(data) {
+  console.log(socket.id, data);
+  data.mine = data.sender.indexOf(socket.id) !== -1;
   messages.push(data);
   updateMessageList();
 });
