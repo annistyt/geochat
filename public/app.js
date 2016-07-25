@@ -36,7 +36,7 @@ $(() => {
   sendButton.click(() => {
     var text = inputField.val();
     if(text.trim() !== '') {
-      socket.emit('send message', {text: text, username: person});
+      socket.emit('send message', {text: text, username: username });
       inputField.val('');
     }
   });
