@@ -41,7 +41,7 @@ var updateUserNameInDom = function(username) {
 }
 
 var askAndSetUsername = function() {
-  username = prompt("Please enter your name", "");
+  username = prompt("Please enter your new name", "");
   localStorage.setItem('username', username);
   return username;
 }
