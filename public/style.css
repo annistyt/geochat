@@ -1,0 +1,21 @@
+body {
+  margin-bottom: 60px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #efefef;
+  border-top: 1px solid #afafaf;
+  padding:10px;
+}
+.user-message {
+  width: 80%;
+  float:left;
+}
+.send-button {
+  width: 20%;
+  float:left;
+}
