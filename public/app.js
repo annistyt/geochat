@@ -1,5 +1,6 @@
 var socket = io();
 var messagesNode = $('.messages');
+var onlineUsersNumber = $('.online-users-number');
 var messages = [];
 
 $(() => {
@@ -37,7 +38,7 @@ socket.on('message', data => {
 });
 
 socket.on('numberofusers', numberofusers => {
-  console.log("numberofusers", numberofusers);
+  onlineUsersNumber.text(numberofusers);
 });
 
 

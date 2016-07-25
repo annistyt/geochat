@@ -14,11 +14,16 @@ var numberofusers = 0;
 
 io.on('connection', socket => {
   numberofusers = numberofusers + 1;
-   io.emit("numberofusers", numberofusers);
+  io.emit("numberofusers", numberofusers);
+
   socket.on('send message', data => {
      console.log(data);
     io.emit('message', data);
-    
+  });
+
+  socket.on('disconnect', () => {
+    numberofusers = numberofusers - 1;
+    io.emit("numberofusers", numberofusers);
   });
 
 });
