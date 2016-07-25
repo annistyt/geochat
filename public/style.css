@@ -6,26 +6,18 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 85px;
   background-color: #efefef;
   border-top: 1px solid #afafaf;
   padding:10px;
 }
-.user-message {
-  width: 80%;
-  float:left;
-}
-.send-button {
-  width: 20%;
-  float:left;
-}
 .users {
-position: absolute;
-top: 20px;
-right: 25px;
-text-align: right;
-
-
-
-
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  text-align: right;
+}
+.messages {
+  overflow-y: scroll;
+  max-height: calc(100vh - 184px);
 }
