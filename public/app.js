@@ -77,6 +77,8 @@ $(function() {
     stopTyping();
     if(event.keyCode == 13) {
       sendButton.click();
+      typing = false;
+      socket.emit('typing', false);
     }
   });
   resetUsernameEl.click(resetUsername);
