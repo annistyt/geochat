@@ -1,26 +1,26 @@
-const socket = io();
-const messagesNode = $('.messages');
-const onlineUsersNumber = $('.online-users-number');
-const welcomeMessage = $('.welcome-message');
-const resetUsernameEl = $('.reset-username');
-const messages = [];
-let username;
+var socket = io();
+var messagesNode = $('.messages');
+var onlineUsersNumber = $('.online-users-number');
+var welcomeMessage = $('.welcome-message');
+var resetUsernameEl = $('.reset-username');
+var messages = [];
+var username;
 
-const resetUsername = () => updateUserNameInDom(askAndSetUsername());
+var resetUsername = function() { updateUserNameInDom(askAndSetUsername()) };
 
-const updateUserNameInDom = username => {
+var updateUserNameInDom = function(username) {
   welcomeMessage.text('Welcome ' + username + '!');
 }
 
-const askAndSetUsername = () => {
+var askAndSetUsername = function() {
   username = prompt("Please enter your name", "");
   localStorage.setItem('username', username);
   return username;
 }
 
-$(() => {
+$(function() {
   if('localStorage' in window) {
-    const {localStorage} = window;
+    var {localStorage} = window;
     username = localStorage.getItem('username');
     if(!username) {
       username = askAndSetUsername();
@@ -33,14 +33,14 @@ $(() => {
 
   var sendButton = $('.send-button');
   var inputField = $('#messageField');
-  sendButton.click(() => {
+  sendButton.click(function() {
     var text = inputField.val();
     if(text.trim() !== '') {
       socket.emit('send message', {text: text, username: username });
       inputField.val('');
     }
   });
-  inputField.on('keyup', event => {
+  inputField.on('keyup', function(event) {
     if(event.keyCode == 13) {
       sendButton.click();
     }
@@ -49,22 +49,22 @@ $(() => {
 });
 
 
-var updateMessageList = () => {
+var updateMessageList = function() {
   messagesNode.html('');
-  messages.forEach(message => {
+  messages.forEach(function(message) {
     var value = message.username + ': ' + message.text;
     $('<li>').text(value).appendTo(messagesNode);
   });
 };
 
-socket.on('message', data => {
+socket.on('message', function(data) {
   messages.push(data);
   updateMessageList();
   // alert(`fikk melding fra bruker: ${data.text}`);
 
 });
 
-socket.on('numberofusers', numberofusers => {
+socket.on('numberofusers', function(numberofusers) {
   onlineUsersNumber.text(numberofusers);
 });
 
