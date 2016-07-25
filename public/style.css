@@ -22,3 +22,10 @@ footer {
   overflow-y: scroll;
   max-height: calc(100vh - 184px);
 }
+.copy {
+  position: absolute;
+  bottom: 90px;
+  right: 25px;
+  text-align: right;
+  color: #898584;
+}
