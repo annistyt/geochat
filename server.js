@@ -11,14 +11,13 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const users = new Map();
+const emitUsers = () => {
+  const userArray = [];
+  users.forEach(({username}) => userArray.push(username));
+  io.emit('users', userArray);
+}
 
 io.on('connection', socket => {
-
-  const emitUsers = () => {
-    const userArray = [];
-    users.forEach(({username}) => userArray.push(username));
-    io.emit('users', userArray);
-  }
 
   socket.on('send message', data => {
     io.emit('message', data);
