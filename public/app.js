@@ -102,7 +102,6 @@ socket.on('users', function(users) {
   onlineUsersNumber.text(users.length);
   onlineUsersList.html('');
   users.forEach(function(user) {
-    console.log(user);
     var _username = user.username == username ? 'Myself' : user.username;
     $('<li>').addClass(user.typing ? 'typing' : '').text(_username).appendTo(onlineUsersList);
   });
