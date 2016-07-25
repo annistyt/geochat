@@ -3,12 +3,13 @@ var messagesNode = $('.messages');
 var messages = [];
 
 $(() => {
+  var person = prompt("Please enter your name", "");
   var sendButton = $('.send-button');
   var inputField = $('#messageField');
   sendButton.click(() => {
     var text = inputField.val();
     if(text.trim() !== '') {
-      socket.emit('send message', {text});
+      socket.emit('send message', {text: text, username: person});
       inputField.val('');
     }
   });
@@ -23,7 +24,8 @@ $(() => {
 var updateMessageList = () => {
   messagesNode.html('');
   messages.forEach(message => {
-    $('<li>').text(message.text).appendTo(messagesNode);
+    var value = message.username + ': ' + message.text;
+    $('<li>').text(value).appendTo(messagesNode);
   });
 };
 

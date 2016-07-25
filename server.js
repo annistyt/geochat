@@ -14,7 +14,7 @@ const io = require('socket.io')(http);
 io.on('connection', socket => {
   
   socket.on('send message', data => {
-
+     console.log(data);
     io.emit('message', data);
 
   });
