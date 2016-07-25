@@ -17,7 +17,7 @@ io.on('connection', socket => {
   const emitUsers = () => {
     const userArray = [];
     users.forEach(({username}) => userArray.push(username));
-    socket.emit('users', userArray);
+    io.emit('users', userArray);
   }
 
   socket.on('send message', data => {
