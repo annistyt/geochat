@@ -17,7 +17,7 @@ footer {
 }
 .send-button {
   width: 20%;
-  float:left;
+  float:right;
 }
 .users {
 position: absolute;
