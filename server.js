@@ -13,7 +13,7 @@ const io = require('socket.io')(http);
 const users = new Map();
 const emitUsers = () => {
   const userArray = [];
-  users.forEach(({username}) => userArray.push(username));
+  users.forEach(user => userArray.push(user));
   io.emit('users', userArray);
 }
 
@@ -30,6 +30,13 @@ io.on('connection', socket => {
 
   socket.on('username', username => {
     users.set(socket.id, {username});
+    emitUsers();
+  });
+
+  socket.on('typing', typing => {
+    const user = users.get(socket.id);
+    user.typing = typing;
+    users.set(socket.id, user);
     emitUsers();
   });
 

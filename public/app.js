@@ -7,6 +7,29 @@ var onlineUsersList = $('.online-users');
 var messages = [];
 var username;
 
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
+var typing;
+
+var stopTyping = debounce(function() {
+  socket.emit('typing', false);
+  typing = false;
+}, 3000);
+
+
 var resetUsername = function() { 
   username = askAndSetUsername();
   updateUserNameInDom(username)
@@ -47,6 +70,11 @@ $(function() {
     }
   });
   inputField.on('keyup', function(event) {
+    if(!typing) {
+      typing = true;
+      socket.emit('typing', true);
+    }
+    stopTyping();
     if(event.keyCode == 13) {
       sendButton.click();
     }
@@ -66,15 +94,15 @@ var updateMessageList = function() {
 socket.on('message', function(data) {
   messages.push(data);
   updateMessageList();
-  // alert(`fikk melding fra bruker: ${data.text}`);
 });
 
 socket.on('users', function(users) {
   onlineUsersNumber.text(users.length);
   onlineUsersList.html('');
-  users.forEach(function(_username) {
-    const user = _username == username ? 'Myself' : _username;
-    $('<li>').text(user).appendTo(onlineUsersList);
+  users.forEach(function(user) {
+    console.log(user);
+    var _username = user.username == username ? 'Myself' : user.username;
+    $('<li>').addClass(user.typing ? 'typing' : '').text(_username).appendTo(onlineUsersList);
   });
 });
 

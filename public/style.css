@@ -21,3 +21,13 @@ footer {
   overflow-y: scroll;
   max-height: calc(100vh - 184px);
 }
+.online-users {
+  list-style: none;
+}
+.online-users li {
+  padding-left: 35px;
+}
+.online-users .typing {
+  background: url('/22.gif') transparent left center no-repeat;
+  background-size: 30%;
+}
