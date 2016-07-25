@@ -10,13 +10,15 @@ app.use(express.static('public', {maxAge: 0}));
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+var numberofusers = 0;
 
 io.on('connection', socket => {
-  
+  numberofusers = numberofusers + 1;
+   io.emit("numberofusers", numberofusers);
   socket.on('send message', data => {
      console.log(data);
     io.emit('message', data);
-
+    
   });
 
 });

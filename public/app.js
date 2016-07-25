@@ -36,4 +36,8 @@ socket.on('message', data => {
 
 });
 
+socket.on('numberofusers', numberofusers => {
+  console.log("numberofusers", numberofusers);
+});
+
 
