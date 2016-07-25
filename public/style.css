@@ -11,6 +11,7 @@ footer {
   border-top: 1px solid #afafaf;
   padding:10px;
 }
+
 .users {
   position: absolute;
   top: 20px;
@@ -30,4 +31,11 @@ footer {
 .online-users .typing {
   background: url('/22.gif') transparent left center no-repeat;
   background-size: 30%;
+}
+.copy {
+  position: absolute;
+  bottom: 90px;
+  right: 25px;
+  text-align: right;
+  color: #898584;
 }
